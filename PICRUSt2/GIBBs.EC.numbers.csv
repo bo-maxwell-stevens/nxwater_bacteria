@@ -1,0 +1,39 @@
+EC,Category,Name,Short
+EC.1.4.99.5,Biocontrol,hydrogen cyanide synthase,HCN
+EC.4.1.1.5,Biocontrol,acetolactate decarboxylase,BUDA
+EC.1.1.1.76,Biocontrol,"(S,S)-butanediol dehydrogenase",BUDC
+EC.3.2.1.6,Biocontrol,"endo-1,3(4)-beta-gulcanase",EBG
+EC.3.2.1.14,Biocontrol,chitinase,CHI
+EC.2.6.1.86,Biocontrol,2-amino-4-deoxychorismate synthase,PHZ
+EC.4.1.1.74,Stress,indolepyruvate decarboxylase,AUX
+EC.3.5.99.7,Stress,1-aminocyclopropane-1-carboxylate deaminase,ACC
+EC.5.4.4.2,Siderophore,isochorismate synthase,ISC
+EC.4.2.99.21,Siderophore,isochorismate lyase,PCH
+EC.3.3.2.1,Siderophore,isochorismatase,ENTB
+EC.1.3.1.28,Siderophore,"2,3-dihydro-2,3-dihydroxybenzoate dehydrogenase",ENTA
+EC.3.2.1.21,C cycling,beta-glucosidase,BG
+EC.3.2.1.20,C cycling,alpha-glucosidase,AG
+EC.3.2.1.91,C cycling,cellobiohydrase,CBH
+EC.1.10.3.2,C cycling,phenol oxidase,POX
+EC.1.11.1.7,C cycling,peroxidase,PER
+EC.3.2.1.52,C/N cycling,N-acetyl-B-glycosamidase,NAG
+EC.3.5.1.4,N cycling,amidase,AMI
+EC.3.5.1.5,N cycling,urease,URE
+EC.3.4.11.1,N cycling,leucyl aminopeptidase,LAP
+EC.1.3.3.11,P cycling,pyrroloquinoline-quinone synthase,PQS
+EC.3.1.3.1,P cycling,alkaline phosphatase,AlP
+EC.3.1.3.2,P cycling,acid phosphatase,AcP
+EC.3.1.3.8,P cycling,3-phytase,3PH
+EC.3.1.3.26,P cycling,4-phytase,4PH
+EC.3.1.6.1,S cycling,arylsulfatase,ASL
+EC.1.18.6.1,N-fixation,nitrogenase,NFIX
+EC.1.14.18.3,Nitrification,methane monooxygenase,MMO
+EC.1.14.99.39,Nitrification,ammonia monooxygenase,AMO
+EC.1.7.2.6,Nitrification,hydroxylamine dehydrogenase,HAO
+EC.1.7.1.15,Dissimilatory nitrate reduction,nitrite reductase (NADH),NirBD
+EC.1.7.2.2,Dissimilatory nitrate reduction,nitrite reductase (cytochrome),NrfAH
+EC.1.7.1.4,Asimilatory nitrate reduction,nitrite reductase [NAD(P)H],NIT-6
+EC.1.7.7.1,Asimilatory nitrate reduction,ferredoxin--nitrite reductase,NirA
+EC.1.7.2.1,Denitrification,nitrite reductase,NirKS
+EC.1.7.2.5,Denitrification,nitric oxide reductase,NorBC
+EC.1.7.2.4,Denitrification,nitrous-oxide reductase,NosZ
