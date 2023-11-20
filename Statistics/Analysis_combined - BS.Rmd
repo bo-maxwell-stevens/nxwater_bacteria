@@ -1,0 +1,136 @@
+---
+title: "N x Water - 16S"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: 
+ html_document:
+    toc: true
+    toc_float: true
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r, warning = F, echo = F, message = F, include = F}
+setwd("C:/Users/bo.stevens/USDA/REE-ARS-PA3012-WMSR - Akron/Bo_structure/Bacterial manuscript/Code/nxwater_bacteria/Statistics")
+library('ggplot2')
+library('knitr')
+library('phyloseq')
+library('readxl')
+library('vegan')
+source("myFunctions.R")
+
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+
+```{r import use custom emu_to_phyloseq function to create phyl, include = F}
+## Bacteria
+
+dataset <- "Bacteria"
+output <- "16S"
+P.A <- emu_to_phyloseq(RA_file='../rel_abund_16S_ABC_qpcr_adj.csv',
+                       meta_file='../mapping_file_with_metadata_harvest_biomass_2022.csv',
+                       sheet='Sheet1', range='B1:X230',
+                       sample_names='Barcode_key',
+                       run_name='16S')
+
+P.rel <- P.A
+saveRDS(P.A, 'P.16S.all.rel.RDS')
+
+```
+
+
+# PCoA
+```{r}
+set.seed(42)
+
+P.glom <- tax_glom(P.rel, taxrank='species')
+
+data <- data.frame(t(otu_table(P.glom)))
+names(data) <- tax_table(P.glom)[,'species']
+
+#data <- sqrt(data)
+dist <- vegdist(data, method='bray')
+
+d <- data.frame(sample_data(P.glom))
+# sum(!is.na(as.numeric(d$Nitrogen)))
+# levels(d$Nitrogen)
+# sum(!is.na(as.factor(d$Nitrogen)))
+# d$Nitrogen <- factor(d$Nitrogen)
+# d$Water <- factor(d$Water)
+ord <- dbrda(dist ~ Nitrogen * Water * Sample.date, data=d)
+# adonis2(dist ~ nitrogen * water * sample_date, data=d)
+disp <- betadisper(dist, d$Sample.date)
+anova(disp)
+disp <- betadisper(dist, d$Water)
+anova(disp)
+disp <- betadisper(dist, d$Nitrogen)
+anova(disp)
+# Betadisper sig = not homogenous
+# Homogenous for water
+# Betadisper not necessary for equal sample sizes
+
+adonis_out <- adonis2(dist ~ Nitrogen * Water * Sample.date, data=d)
+adonis_out
+adonis_out$R2
+predictor_r2 <- head(adonis_out$R2, -2)
+predictor_r2_sum <- sum(predictor_r2)
+predictor_r2_sum
+anova(ord, permutations = how(nperm = 999))
+
+# Checking sample sizes
+# d$treatment <- paste(d$water, d$nitrogen, d$sample_date, sep = "_")
+# all_string_listwise <- unlist(lapply(d$treatment, unique))
+# sample_sizes <- data.frame(table(all_string_listwise))
+# sample_sizes_df <- cbind(data.frame(do.call("rbind", strsplit(as.character(sample_sizes$all_string_listwise), "_", fixed = TRUE))), sample_sizes$Freq)
+# names(sample_sizes_df) <- c("Water", "Nitrogen", "Date", "Count")
+# write.csv(sample_sizes_df, paste("Sample_sizes_", output, ".csv", sep = ""))
+
+# Plotting
+ev <- eigenvals(ord)
+Axis1_exp = round(ev[1] / sum(ev) * 100, 1)
+Axis2_exp = round(ev[2] / sum(ev) * 100, 1)
+
+axes <- as.data.frame(vegan::scores(ord, display="sites", choices=c(1:2)))
+names(axes) <- c("Axis1", "Axis2")
+axes <- cbind(d, axes) 
+
+# axes$nitrogen <- factor(axes$Nitrogen)
+# axes$water <- factor(axes$Water)
+# axes$sample_date <- factor(axes$sample_date)
+axes$Sample.date <- factor(axes$Sample.date)
+axes$trt <- interaction(axes$Nitrogen, axes$Water)
+mult <- 1
+
+# #The below graph omits the biplot arrows
+# ggplot(data=axes, aes(x=Axis1, y=Axis2, fill=nitrogen)) +
+#  facet_grid(water ~ sample_date) +
+#  geom_point(size=6, shape=21) +
+#  scale_fill_brewer(palette = 'Set1') +
+#  stat_ellipse(aes(group=nitrogen, color=nitrogen), type='t', level=0.95) +
+#   guides(fill = guide_legend(
+#     override.aes=list(shape = rep(21,3)))) +
+#   labs(x=paste0('CAP1 (', Axis1_exp, '%)'), 
+#        y=paste0('CAP2 (', Axis2_exp, '%)')) +
+#   scale_color_brewer(palette = 'Set1')  +
+#   theme_bw()
+axes$Nitrogen <- as.factor(axes$Nitrogen)
+axes$Water <- as.factor(axes$Water)
+#The below graph omits the biplot arrows
+ggplot(data=axes, aes(x=Axis1, y=Axis2, fill=Nitrogen)) +
+ ggtitle(paste(dataset, "(Bray-Curtis dbRDA)")) +
+ facet_grid(Water ~ Sample.date) +
+ geom_point(size=6, shape=21) +
+ scale_fill_brewer(palette = 'Set1') +
+ # stat_ellipse(aes(group=Nitrogen, color=Nitrogen), type='t', level=0.95) +
+  guides(fill = guide_legend(
+    override.aes=list(shape = rep(21,3)))) +
+  labs(x=paste0('CAP1 (', Axis1_exp, '%)'), 
+       y=paste0('CAP2 (', Axis2_exp, '%)')) +
+  scale_color_brewer(palette = 'Set1')  +
+  theme_bw()
+
+ggsave("../Output/Figures/dbRDA.png")
+```
