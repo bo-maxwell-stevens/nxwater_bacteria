@@ -178,24 +178,28 @@ emu_to_phyloseq <- function (RA_file=NULL, meta_file=NULL, sheet=NULL,
                              range=NULL, sample_names=NULL, run_name=NULL) {
   df <- read.csv(RA_file, header=T,  
                  row.names='tax_id')
-  tax <- df[,2:8]
+  
+  tax <- df[,2:9]
+  tax[is.na(tax)] <- ""
   tax <- tax.clean(tax)
   TAX <- tax_table(as.matrix(tax))
   
   otu <- df[,9:ncol(df)]
   otu[is.na(otu)] <- 0
-
-  meta <- data.frame(read_excel(meta_file, sheet=sheet, range=range))
-  common <- Reduce(intersect, list(meta$sample, names(otu)))
-  meta <- meta[meta$sample %in% common,]
+  
+  meta <- data.frame(read.csv(meta_file))
+  print(head(meta))
+  common <- Reduce(intersect, list(meta$Barcode_key, names(otu)))
+  meta <- meta[meta$Barcode_key %in% common,]
+  
   SAMP <- sample_data(meta)
-  sample_names(SAMP) <- meta[,1]
+  sample_names(SAMP) <- paste(meta$Barcode_key, run_name, sep='_')
   
   otu <- otu[,common]
+  names(otu) <- paste(names(otu), run_name, sep='_')
   OTU <- otu_table(otu, taxa_are_rows=T)
   
   phy_obj <- phyloseq(SAMP, OTU, TAX )
-  sample_names(phy_obj) <- meta[,sample_names]
   
   return(phy_obj)
 }
@@ -234,8 +238,9 @@ gibbs_to_phyloseq_EC <- function (RA_file=NULL, meta_file=NULL, sheet=NULL,
   tax <- read.csv('GIBBs.EC.numbers.csv', row.names='EC')
   TAX <- tax_table(as.matrix(tax))
   
-  meta <- data.frame(read_excel(meta_file, sheet=sheet, range=range))
+  meta <- data.frame(read.csv(meta_file))
   common <- Reduce(intersect, list(meta$sample, names(otu)))
+  print(common)
   meta <- meta[meta$sample %in% common,]
   SAMP <- sample_data(meta)
   sample_names(SAMP) <- meta[,1]

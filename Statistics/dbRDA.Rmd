@@ -52,7 +52,8 @@ P.glom <- tax_glom(P.rel, taxrank='species')
 data <- data.frame(t(otu_table(P.glom)))
 names(data) <- tax_table(P.glom)[,'species']
 
-#data <- sqrt(data)
+# data <- sqrt(data)
+data <- log(data + 1)
 dist <- vegdist(data, method='bray')
 
 d <- data.frame(sample_data(P.glom))
