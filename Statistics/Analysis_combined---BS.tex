@@ -1,0 +1,157 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={NxWater - 16S},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{NxWater - 16S}
+\author{}
+\date{\vspace{-2.5em}November 20, 2023}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\hypertarget{pcoa}{%
+\section{PCoA}\label{pcoa}}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: Distances
+##            Df  Sum Sq  Mean Sq F value    Pr(>F)    
+## Groups      9 0.43831 0.048702  3.5636 0.0003632 ***
+## Residuals 231 3.15694 0.013666                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: Distances
+##            Df  Sum Sq  Mean Sq F value  Pr(>F)  
+## Groups      1 0.04924 0.049238   4.291 0.03939 *
+## Residuals 239 2.74246 0.011475                  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: Distances
+##            Df  Sum Sq  Mean Sq F value  Pr(>F)  
+## Groups      2 0.07907 0.039533  3.4424 0.03359 *
+## Residuals 238 2.73322 0.011484                  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{verbatim}
+## Permutation test for adonis under reduced model
+## Terms added sequentially (first to last)
+## Permutation: free
+## Number of permutations: 999
+## 
+## adonis2(formula = dist ~ Nitrogen * Water * Sample.date, data = d)
+##                             Df SumOfSqs      R2       F Pr(>F)    
+## Nitrogen                     2    0.636 0.01464  2.4872  0.006 ** 
+## Water                        1    0.426 0.00981  3.3313  0.006 ** 
+## Sample.date                  9   12.545 0.28874 10.8992  0.001 ***
+## Nitrogen:Water               2    0.452 0.01041  1.7690  0.044 *  
+## Nitrogen:Sample.date        18    2.651 0.06101  1.1516  0.115    
+## Water:Sample.date            8    1.355 0.03119  1.3245  0.068 .  
+## Nitrogen:Water:Sample.date  16    1.851 0.04259  0.9044  0.775    
+## Residual                   184   23.532 0.54160                   
+## Total                      240   43.449 1.00000                   
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 0.014642254 0.009805738 0.288736017 0.010414291 0.061012791 0.031189213
+## [7] 0.042594729 0.541604969 1.000000000
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 0.458395
+\end{verbatim}
+
+\begin{verbatim}
+## Permutation test for dbrda under reduced model
+## Permutation: free
+## Number of permutations: 999
+## 
+## Model: dbrda(formula = dist ~ Nitrogen * Water * Sample.date, data = d)
+##           Df SumOfSqs      F Pr(>F)    
+## Model     56   19.917 2.7809  0.001 ***
+## Residual 184   23.532                  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\includegraphics{Analysis_combined---BS_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+\end{document}
